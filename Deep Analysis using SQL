@@ -1,0 +1,57 @@
+CREATE DATABASE ecommerce_project;
+USE ecommerce_project;
+SELECT COUNT(*) FROM superstore_final;
+
+-- Overall Business Performance
+SELECT 
+ROUND(SUM(Sales),2) AS Total_Sales,
+ROUND(SUM(Profit),2) AS Total_Profit,
+ROUND(SUM(Profit)/SUM(Sales)*100,2) AS Profit_Margin
+FROM superstore_final;
+
+-- Category Performance
+SELECT 
+Category,
+ROUND(SUM(Sales),2) AS Sales,
+ROUND(SUM(Profit),2) AS Profit
+FROM superstore_final
+GROUP BY Category
+ORDER BY Sales DESC;
+
+-- Sub-Category Loss Analysis
+SELECT 
+`Sub-Category`,
+ROUND(SUM(Sales),2) AS Sales,
+ROUND(SUM(Profit),2) AS Profit
+FROM superstore_final
+GROUP BY `Sub-Category`
+ORDER BY Profit ASC;
+
+-- Top 10 Customers
+SELECT 
+`Customer Name`,
+ROUND(SUM(Sales),2) AS Total_Spent
+FROM superstore_final
+GROUP BY `Customer Name`
+ORDER BY Total_Spent DESC
+LIMIT 10;
+
+-- Region-wise Analysis
+SELECT 
+Region,
+ROUND(SUM(Sales),2) AS Sales,
+ROUND(SUM(Profit),2) AS Profit
+FROM superstore_final
+GROUP BY Region;
+
+-- Monthly Sales Trend
+SELECT 
+DATE_FORMAT(STR_TO_DATE(`Order Date`, '%m/%d/%Y'), '%Y-%m') AS Month,
+ROUND(SUM(Sales),2) AS Sales
+FROM superstore_final
+GROUP BY Month
+ORDER BY Month;
+
+SELECT Category, SUM(Sales), SUM(Profit)
+FROM superstore_final
+GROUP BY Category;
